@@ -1,18 +1,25 @@
 package com.ibagroup.bot.telegram.command;
 
 import com.ibagroup.bot.command.Command;
+import com.ibagroup.common.mongo.collection.State;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import java.util.List;
 
 public interface BotCommand {
 
     Command getCommand();
 
+    String execute(Update update);
+
+    String getDescription();
+
     default boolean isAnonymous(){
         return getCommand().isAnonymous();
     }
 
-    String execute(Update update);
-
-    String getDescription();
+    default List<State> getStates(){
+        return List.of();
+    }
 
 }

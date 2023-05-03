@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 public enum Command {
 
     START,
-    HELP;
+    HELP,
+    AUTHENTICATE,
+    CANCEL;
 
     private boolean isAnonymous = true;
 
