@@ -20,7 +20,7 @@ public class ProductController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addProduct(@RequestBody @Valid ProductDto productDto){
-        productService.addProduct(productDto);
+        productService.createProduct(productDto);
     }
 
 }

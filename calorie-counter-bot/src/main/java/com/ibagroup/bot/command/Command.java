@@ -12,7 +12,8 @@ public enum Command {
     START,
     HELP,
     AUTHENTICATE,
-    CANCEL;
+    CANCEL,
+    REGISTER_PRODUCT(false);
 
     private boolean isAnonymous = true;
 

@@ -22,6 +22,10 @@ public class SessionService {
         sessionRepository.insert(new Session(id));
     }
 
+    public boolean isUserConfirmed(Long id){
+        return sessionRepository.findById(id).map(Session::isConfirmed).orElseThrow();
+    }
+
     public Session getSession(Long id){
         return sessionRepository.findById(id).orElseThrow();
     }

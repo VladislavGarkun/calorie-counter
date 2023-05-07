@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 
 @Getter
@@ -27,6 +28,7 @@ public class Confirmation {
     @NonNull
     private final LocalDateTime creationDateTime;
 
+    @Email(message = "Email must be correct")
     @NonNull
     private final String email;
 
