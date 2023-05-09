@@ -1,6 +1,6 @@
 package com.ibagroup.web.controller;
 
-import com.ibagroup.common.domain.dto.ProductDto;
+import com.ibagroup.common.domain.dto.ProductRegistrationDto;
 import com.ibagroup.common.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,8 +19,8 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addProduct(@RequestBody @Valid ProductDto productDto){
-        productService.createProduct(productDto);
+    public void addProduct(@RequestBody @Valid ProductRegistrationDto productRegistrationDto){
+        productService.createProduct(productRegistrationDto);
     }
 
 }

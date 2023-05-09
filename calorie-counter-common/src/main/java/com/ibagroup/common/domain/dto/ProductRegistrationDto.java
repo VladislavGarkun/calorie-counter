@@ -3,14 +3,13 @@ package com.ibagroup.common.domain.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 @Getter
 @Setter
-public class ProductDto {
+public class ProductRegistrationDto {
 
     @NotNull(message = "Product name can't be null")
     @NotEmpty(message = "Product name can't be empty")
@@ -27,9 +26,5 @@ public class ProductDto {
     @NotNull(message = "Fats cannot be null")
     @PositiveOrZero(message = "Fats can't be less than 0")
     private Float fats;
-
-    @NotNull(message = "Calories cannot be null")
-    @Min(value = 0, message = "Calories can't be less than 0")
-    private Float calories;
 
 }

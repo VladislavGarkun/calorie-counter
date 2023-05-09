@@ -13,7 +13,8 @@ public enum Command {
     HELP,
     AUTHENTICATE,
     CANCEL,
-    REGISTER_PRODUCT(false);
+    REGISTER_PRODUCT(false),
+    SHOW_PRODUCTS(false);
 
     private boolean isAnonymous = true;
 

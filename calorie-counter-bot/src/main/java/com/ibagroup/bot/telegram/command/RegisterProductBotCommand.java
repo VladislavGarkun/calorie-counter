@@ -1,7 +1,7 @@
 package com.ibagroup.bot.telegram.command;
 
 import com.ibagroup.bot.command.Command;
-import com.ibagroup.common.domain.dto.ProductDto;
+import com.ibagroup.common.domain.dto.ProductRegistrationDto;
 import com.ibagroup.common.mongo.collection.State;
 import com.ibagroup.common.service.ProductService;
 import com.ibagroup.common.service.SessionService;
@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import javax.validation.constraints.Digits;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -20,7 +19,7 @@ public class RegisterProductBotCommand implements BotCommand{
     private final static String TEXT_PATTERN = "[a-zA-Z\s]*";
     private final static String NUMBER_PATTERN = "[0-9.]*";
 
-    private ProductDto productDto = new ProductDto();
+    private ProductRegistrationDto productRegistrationDto = new ProductRegistrationDto();
 
     private final SessionService sessionService;
     private final ProductService productService;
@@ -46,7 +45,7 @@ public class RegisterProductBotCommand implements BotCommand{
             case ADDING_PRODUCT_ENTER_NAME: {
                 String name = update.getMessage().getText();
                 if(Pattern.matches(TEXT_PATTERN, name)){
-                    productDto.setName(name);
+                    productRegistrationDto.setName(name);
                     sessionService.setBotState(chatId, State.ADDING_PRODUCT_ENTER_PROTEINS);
                     yield "Please enter protein content: ";
                 } else {
@@ -56,7 +55,7 @@ public class RegisterProductBotCommand implements BotCommand{
             case ADDING_PRODUCT_ENTER_PROTEINS: {
                 String proteins = update.getMessage().getText();
                 if(Pattern.matches(NUMBER_PATTERN, proteins) && Float.valueOf(proteins) >= 0) {
-                    productDto.setProteins(Float.valueOf(proteins));
+                    productRegistrationDto.setProteins(Float.valueOf(proteins));
                     sessionService.setBotState(chatId, State.ADDING_PRODUCT_ENTER_CARBS);
                     yield "Please enter carbs content: ";
                 } else {
@@ -66,7 +65,7 @@ public class RegisterProductBotCommand implements BotCommand{
             case ADDING_PRODUCT_ENTER_CARBS: {
                 String carbs = update.getMessage().getText();
                 if(Pattern.matches(NUMBER_PATTERN, carbs) && Float.valueOf(carbs) >= 0) {
-                    productDto.setCarbs(Float.valueOf(carbs));
+                    productRegistrationDto.setCarbs(Float.valueOf(carbs));
                     sessionService.setBotState(chatId, State.ADDING_PRODUCT_ENTER_FATS);
                     yield "Please enter fats content: ";
                 } else {
@@ -76,8 +75,8 @@ public class RegisterProductBotCommand implements BotCommand{
             case ADDING_PRODUCT_ENTER_FATS: {
                 String fats = update.getMessage().getText();
                 if(Pattern.matches(NUMBER_PATTERN, fats) && Float.valueOf(fats) >= 0) {
-                    productDto.setFats(Float.valueOf(fats));
-                    productService.createProduct(productDto);
+                    productRegistrationDto.setFats(Float.valueOf(fats));
+                    productService.createProduct(productRegistrationDto);
                     sessionService.setBotState(chatId, State.DEFAULT);
                     yield "Product successfully added";
                 } else {
