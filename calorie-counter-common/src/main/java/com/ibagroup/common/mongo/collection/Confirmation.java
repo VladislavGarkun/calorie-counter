@@ -1,5 +1,6 @@
 package com.ibagroup.common.mongo.collection;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 public class Confirmation {
 
     @Id
+    @Setter(AccessLevel.NONE)
     private final String id;
 
     @NonNull

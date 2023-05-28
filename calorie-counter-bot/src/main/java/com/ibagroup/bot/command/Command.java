@@ -14,7 +14,8 @@ public enum Command {
     AUTHENTICATE,
     CANCEL,
     REGISTER_PRODUCT(false),
-    SHOW_PRODUCTS(false);
+    SHOW_PRODUCTS(false),
+    ADD_MEAL(false);
 
     private boolean isAnonymous = true;
 

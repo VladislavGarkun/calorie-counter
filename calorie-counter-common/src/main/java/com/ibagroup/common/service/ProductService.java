@@ -39,4 +39,8 @@ public class ProductService {
         return productRepository.findAll().stream().map(productMapper::toDto).collect(Collectors.toList());
     }
 
+    public String getProductIdByName(String name){
+        return productRepository.findProductByName(name).map(Product::getId).orElse(null);
+    }
+
 }
