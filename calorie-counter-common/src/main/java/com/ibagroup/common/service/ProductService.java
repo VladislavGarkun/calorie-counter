@@ -8,6 +8,7 @@ import com.ibagroup.common.mongo.collection.Product;
 import com.ibagroup.common.mongo.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class ProductService {
 
