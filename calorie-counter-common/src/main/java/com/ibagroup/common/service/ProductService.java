@@ -38,7 +38,7 @@ public class ProductService {
     }
 
     public List<ProductDto> getProducts(){
-        return productRepository.findAll().stream().map(productMapper::toDto).collect(Collectors.toList());
+        return productMapper.toDto(productRepository.findAll());
     }
 
     public String getProductIdByName(String name){

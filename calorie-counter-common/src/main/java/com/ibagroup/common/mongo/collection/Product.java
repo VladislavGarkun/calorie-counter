@@ -1,8 +1,6 @@
 package com.ibagroup.common.mongo.collection;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +11,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Document(value = "products")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
