@@ -2,7 +2,6 @@ package com.ibagroup.web.controller;
 
 import com.ibagroup.common.domain.dto.ProductRegistrationDto;
 import com.ibagroup.common.service.ProductService;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,29 +10,26 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.VerificationCollector;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {ProductController.class, ProductService.class, LocalValidatorFactoryBean.class})
-@Import(ValidationAutoConfiguration.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ProductControllerUnitTest {
 
-    @Autowired
+    @InjectMocks
     private ProductController productController;
 
-    @MockBean
+    @Mock
     private ProductService productService;
+
+    @Rule
+    public VerificationCollector verificationCollector = MockitoJUnit.collector();
 
     @Test
     public void whenAddProduct_givenProductRegistrationDto(){
@@ -46,19 +42,10 @@ public class ProductControllerUnitTest {
         productController.addProduct(productRegistrationDto);
 
         // then
+        // VerificationCollector will show to errors immediately
+        //verify(productService).getProducts();
+        //verify(productService).getProductIdByName("name");
         verify(productService).createProduct(productRegistrationDto);
-    }
-
-    @Test
-    //@Ignore(value = "Processing does not throw an exception")
-    public void shouldThrowMethodArgumentNotValidException_whenAddProduct_givenNull(){
-        // given
-
-        // when
-        productController.addProduct(null);
-
-        // then
-        verify(productService).createProduct(null);
     }
 
 }

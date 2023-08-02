@@ -17,7 +17,7 @@ public class ConfirmationService {
         confirmationRepository.insert(confirmation);
     }
 
-    public Optional<Confirmation> findConfirmation(String id){
+    public Optional<Confirmation> getConfirmationById(String id){
         return confirmationRepository.findById(id);
     }
 

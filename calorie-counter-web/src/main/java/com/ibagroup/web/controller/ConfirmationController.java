@@ -23,11 +23,11 @@ public class ConfirmationController {
 
     @GetMapping(value = "/confirmation/{id}")
     public ResponseEntity confirmUser(@PathVariable String id) throws MessagingException {
-        Optional<Confirmation> confirmationOptional = confirmationService.findConfirmation(id);
+        Optional<Confirmation> confirmationOptional = confirmationService.getConfirmationById(id);
         Confirmation confirmation = confirmationOptional.orElseThrow();
         sessionService.confirmUser(confirmation.getChatId());
         sendMailService.sendNotificationSuccessConfirmation(confirmation.getEmail());
-        return ResponseEntity.ok("You successfully confirmed your email !");
+        return ResponseEntity.ok("You successfully confirmed your email!");
     }
 
 }

@@ -6,7 +6,7 @@ import com.ibagroup.common.domain.mapper.ProductMapper;
 import com.ibagroup.common.domain.mapper.ProductRegistrationMapper;
 import com.ibagroup.common.mongo.collection.Product;
 import com.ibagroup.common.mongo.repository.ProductRepository;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,6 +35,26 @@ public class ProductServiceUnitTest {
     private ProductRepository productRepository;
     @Mock
     private ProductRegistrationMapper productRegistrationMapper;
+
+    @Before
+    public void before(){
+        System.out.println("before");
+    }
+
+    @After
+    public void after(){
+        System.out.println("after");
+    }
+
+    @BeforeClass
+    public static void beforeClass(){
+        System.out.println("beforeClass");
+    }
+
+    @AfterClass
+    public static void afterClass(){
+        System.out.println("afterClass");
+    }
 
     @Test
     public void shouldSaveProduct_whenCreateProduct_givenProductRegistrationDto() {
