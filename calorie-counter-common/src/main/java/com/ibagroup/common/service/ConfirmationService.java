@@ -1,7 +1,7 @@
 package com.ibagroup.common.service;
 
-import com.ibagroup.common.mongo.collection.Confirmation;
-import com.ibagroup.common.mongo.repository.ConfirmationRepository;
+import com.ibagroup.common.dao.mongo.collection.Confirmation;
+import com.ibagroup.common.dao.mongo.repository.ConfirmationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

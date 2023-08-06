@@ -1,6 +1,6 @@
 package com.ibagroup.web.controller;
 
-import com.ibagroup.common.mongo.collection.Confirmation;
+import com.ibagroup.common.dao.mongo.collection.Confirmation;
 import com.ibagroup.common.service.ConfirmationService;
 import com.ibagroup.common.service.SendMailService;
 import com.ibagroup.common.service.SessionService;

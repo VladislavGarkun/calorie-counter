@@ -2,7 +2,7 @@ package com.ibagroup.bot.configuration;
 
 import com.ibagroup.bot.command.Command;
 import com.ibagroup.bot.telegram.command.BotCommand;
-import com.ibagroup.common.mongo.collection.State;
+import com.ibagroup.common.dao.enums.State;
 import com.ibagroup.common.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

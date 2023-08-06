@@ -2,8 +2,8 @@ package com.ibagroup.common.service;
 
 import com.ibagroup.common.domain.dto.MealRegistrationDto;
 import com.ibagroup.common.domain.mapper.MealRegistrationMapper;
-import com.ibagroup.common.mongo.collection.Meal;
-import com.ibagroup.common.mongo.repository.MealRepository;
+import com.ibagroup.common.dao.mongo.collection.Meal;
+import com.ibagroup.common.dao.mongo.repository.MealRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

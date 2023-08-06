@@ -1,4 +1,4 @@
-package com.ibagroup.common.mongo.collection;
+package com.ibagroup.common.dao.mongo.collection;
 
 import lombok.AccessLevel;
 import lombok.Getter;

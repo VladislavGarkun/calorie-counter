@@ -1,4 +1,4 @@
-package com.ibagroup.common.mongo.collection;
+package com.ibagroup.common.dao.mongo.collection;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

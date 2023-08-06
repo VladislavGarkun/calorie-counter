@@ -1,8 +1,8 @@
 package com.ibagroup.common.service;
 
-import com.ibagroup.common.mongo.collection.Session;
-import com.ibagroup.common.mongo.collection.State;
-import com.ibagroup.common.mongo.repository.SessionRepository;
+import com.ibagroup.common.dao.mongo.collection.Session;
+import com.ibagroup.common.dao.enums.State;
+import com.ibagroup.common.dao.mongo.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

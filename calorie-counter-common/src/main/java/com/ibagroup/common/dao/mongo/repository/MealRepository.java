@@ -1,6 +1,6 @@
-package com.ibagroup.common.mongo.repository;
+package com.ibagroup.common.dao.mongo.repository;
 
-import com.ibagroup.common.mongo.collection.Meal;
+import com.ibagroup.common.dao.mongo.collection.Meal;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
