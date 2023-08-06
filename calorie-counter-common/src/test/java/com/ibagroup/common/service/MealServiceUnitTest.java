@@ -30,7 +30,7 @@ public class MealServiceUnitTest {
     @Test
     public void shouldSaveMeal_whenCreateMeal_givenMealRegistrationDto(){
         // given
-        MealRegistrationDto mealRegistrationDto = new MealRegistrationDto("productId", 100f, LocalDateTime.MAX);
+        MealRegistrationDto mealRegistrationDto = new MealRegistrationDto("productId", 1L, 100f, LocalDateTime.MAX);
         Meal meal = prepareMeal();
 
         when(mealRegistrationMapper.toEntity(any())).thenReturn(meal);
@@ -47,6 +47,7 @@ public class MealServiceUnitTest {
     private Meal prepareMeal(){
         Meal meal = new Meal();
         meal.setProductId("productId");
+        meal.setSessionId(1L);
         meal.setWeight(100f);
         meal.setMealDateTime(LocalDateTime.MAX);
         return meal;

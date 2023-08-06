@@ -43,7 +43,7 @@ public class ProductControllerUnitTest {
 
         // then
         // VerificationCollector will show to errors immediately
-        //verify(productService).getProducts();
+        // verify(productService).getProducts();
         //verify(productService).getProductIdByName("name");
         verify(productService).createProduct(productRegistrationDto);
     }

@@ -3,11 +3,11 @@ package com.ibagroup.bot.telegram.command;
 import com.ibagroup.bot.command.Command;
 import com.ibagroup.common.domain.dto.ProductDto;
 import com.ibagroup.common.service.ProductService;
+import com.ibagroup.common.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -22,6 +22,8 @@ public class ShowProductsBotCommand implements BotCommand{
 
     private final ProductService productService;
 
+    private final SessionService sessionService;
+
     @Override
     public Command getCommand() {
         return Command.SHOW_PRODUCTS;
@@ -29,6 +31,11 @@ public class ShowProductsBotCommand implements BotCommand{
 
     @Override
     public String execute(Update update) {
+        Long chatId = update.getMessage().getChatId();
+        if(!sessionService.isUserConfirmed(chatId)){
+            return "You must be an authenticated user to execute this command.";
+        }
+
         List<ProductDto> products = productService.getProducts();
 
         StringBuilder productsInfo = new StringBuilder();
@@ -47,6 +54,6 @@ public class ShowProductsBotCommand implements BotCommand{
 
     @Override
     public String getDescription() {
-        return "Show products registered in the system";
+        return "Shows products registered in the system";
     }
 }

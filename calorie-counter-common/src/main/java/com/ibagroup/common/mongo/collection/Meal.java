@@ -23,6 +23,9 @@ public class Meal {
     @NotNull(message = "ProductId can't be null")
     private String productId;
 
+    @NotNull(message = "SessionId can't be null")
+    private Long sessionId;
+
     @NotNull(message = "Meal weight can't be null")
     @Positive(message = "Weight can't be negative or zero")
     private Float weight;

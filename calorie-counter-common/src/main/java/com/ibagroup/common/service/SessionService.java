@@ -49,7 +49,7 @@ public class SessionService {
 
     public void setEmail(Long id, String email) {
         Session session = sessionRepository.findById(id).orElseThrow();
-        session.setName(email);
+        session.setEmail(email);
         sessionRepository.save(session);
     }
 

@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class RegisterProductBotCommand implements BotCommand{
 
-    private final static String TEXT_PATTERN = "[a-zA-Z\s]*";
-    private final static String NUMBER_PATTERN = "[0-9.]*";
+    private final static String TEXT_PATTERN = "[a-zA-Z ]*";
+    private final static String NUMBER_PATTERN = "[0-9]+\\.?[0-9]*";
 
     private ProductRegistrationDto productRegistrationDto = new ProductRegistrationDto();
 

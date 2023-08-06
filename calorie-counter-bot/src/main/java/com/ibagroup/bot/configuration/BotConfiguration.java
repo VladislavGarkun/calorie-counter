@@ -58,7 +58,7 @@ public class BotConfiguration {
 
         String helpMessage = Stream.of(Command.values())
                 .map(command -> botCommands.get(command))
-                .map(botCommand -> "/" + botCommand.getCommand().name().toLowerCase() + " -- " + botCommand.getDescription() + (botCommand.isAnonymous() ? "" : "(<i>requires authentication</i>)"))
+                .map(botCommand -> "/" + botCommand.getCommand().name().toLowerCase() + " -- " + botCommand.getDescription() + (botCommand.isAnonymous() ? "" : " (<i>requires authentication</i>)"))
                 .collect(Collectors.joining("\n"));
         messageConfiguration.setHelpMessage(helpMessage);
     }

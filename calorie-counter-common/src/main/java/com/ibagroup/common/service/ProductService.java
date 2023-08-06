@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,4 +47,10 @@ public class ProductService {
         return productRepository.findProductByName(name).map(Product::getId).orElse(null);
     }
 
+    public Map<String, ProductDto> getProductsByIds(List<String> productIds) {
+        return productRepository.findProductsByIdIn(productIds)
+                .stream()
+                .map(productMapper::toDto)
+                .collect(Collectors.toMap(ProductDto::getId, Function.identity()));
+    }
 }

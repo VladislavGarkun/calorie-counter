@@ -40,6 +40,9 @@ public class AddMealBotCommand implements BotCommand {
     @Override
     public String execute(Update update) {
         Long chatId = update.getMessage().getChatId();
+        if(!sessionService.isUserConfirmed(chatId)) {
+            return "You need to authenticate to use this command";
+        }
         Session session = sessionService.getSession(chatId);
 
         return switch (session.getState()){
@@ -63,8 +66,9 @@ public class AddMealBotCommand implements BotCommand {
                 if (Pattern.matches(NUMBER_PATTERN, weight) && Float.valueOf(weight) > 0) {
                     mealRegistrationDto.setWeight(Float.valueOf(weight));
                     mealRegistrationDto.setMealDateTime(LocalDateTime.now());
-                    sessionService.setBotState(chatId, State.DEFAULT);
+                    mealRegistrationDto.setSessionId(chatId);
                     mealService.createMeal(mealRegistrationDto);
+                    sessionService.setBotState(chatId, State.DEFAULT);
                     yield "Meal was successfully added";
                 } else {
                    yield "Please enter positive weight value: ";
