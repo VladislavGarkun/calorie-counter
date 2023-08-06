@@ -21,7 +21,6 @@ public class ShowProductsBotCommand implements BotCommand{
     private static final String[] HEADERS = {"Number", "Name", "Proteins", "Carbs", "Fats", "Calories"};
 
     private final ProductService productService;
-
     private final SessionService sessionService;
 
     @Override

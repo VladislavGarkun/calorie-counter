@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,15 +24,15 @@ public class Confirmation {
     @Setter(AccessLevel.NONE)
     private final String id;
 
-    @NonNull
+    @NotNull(message = "Chat id can't be null")
     private final Long chatId;
 
     @Field(targetType = FieldType.DATE_TIME)
-    @NonNull
+    @NotNull(message = "Creation date time can't be null")
     private final LocalDateTime creationDateTime;
 
     @Email(message = "Email must be correct")
-    @NonNull
+    @NotNull(message = "Email can't be null")
     private final String email;
 
 }

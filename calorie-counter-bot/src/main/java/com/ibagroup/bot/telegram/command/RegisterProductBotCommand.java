@@ -30,6 +30,14 @@ public class RegisterProductBotCommand implements BotCommand{
     }
 
     @Override
+    public List<State> getStates() {
+        return List.of(State.ADDING_PRODUCT_ENTER_NAME,
+                State.ADDING_PRODUCT_ENTER_PROTEINS,
+                State.ADDING_PRODUCT_ENTER_CARBS,
+                State.ADDING_PRODUCT_ENTER_FATS);
+    }
+
+    @Override
     public String execute(Update update) {
         Long chatId = update.getMessage().getChatId();
         if(!sessionService.isUserConfirmed(chatId)) {
@@ -54,7 +62,7 @@ public class RegisterProductBotCommand implements BotCommand{
             }
             case ADDING_PRODUCT_ENTER_PROTEINS: {
                 String proteins = update.getMessage().getText();
-                if(Pattern.matches(NUMBER_PATTERN, proteins) && Float.valueOf(proteins) >= 0) {
+                if(Pattern.matches(NUMBER_PATTERN, proteins) && Float.parseFloat(proteins) >= 0) {
                     productRegistrationDto.setProteins(Float.valueOf(proteins));
                     sessionService.setBotState(chatId, State.ADDING_PRODUCT_ENTER_CARBS);
                     yield "Please enter carbs content: ";
@@ -64,7 +72,7 @@ public class RegisterProductBotCommand implements BotCommand{
             }
             case ADDING_PRODUCT_ENTER_CARBS: {
                 String carbs = update.getMessage().getText();
-                if(Pattern.matches(NUMBER_PATTERN, carbs) && Float.valueOf(carbs) >= 0) {
+                if(Pattern.matches(NUMBER_PATTERN, carbs) && Float.parseFloat(carbs) >= 0) {
                     productRegistrationDto.setCarbs(Float.valueOf(carbs));
                     sessionService.setBotState(chatId, State.ADDING_PRODUCT_ENTER_FATS);
                     yield "Please enter fats content: ";
@@ -74,7 +82,7 @@ public class RegisterProductBotCommand implements BotCommand{
             }
             case ADDING_PRODUCT_ENTER_FATS: {
                 String fats = update.getMessage().getText();
-                if(Pattern.matches(NUMBER_PATTERN, fats) && Float.valueOf(fats) >= 0) {
+                if(Pattern.matches(NUMBER_PATTERN, fats) && Float.parseFloat(fats) >= 0) {
                     productRegistrationDto.setFats(Float.valueOf(fats));
                     productService.createProduct(productRegistrationDto);
                     sessionService.setBotState(chatId, State.DEFAULT);
@@ -95,11 +103,4 @@ public class RegisterProductBotCommand implements BotCommand{
         return "Registers product in the system";
     }
 
-    @Override
-    public List<State> getStates() {
-        return List.of(State.ADDING_PRODUCT_ENTER_NAME,
-                State.ADDING_PRODUCT_ENTER_PROTEINS,
-                State.ADDING_PRODUCT_ENTER_CARBS,
-                State.ADDING_PRODUCT_ENTER_FATS);
-    }
 }

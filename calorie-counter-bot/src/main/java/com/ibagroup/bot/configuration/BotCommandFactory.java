@@ -14,9 +14,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class BotCommandFactory {
 
-    private final BotConfiguration botConfiguration;
-
     private final SessionService serviceService;
+    private final BotConfiguration botConfiguration;
 
     public BotCommand getBotCommand(Update update){
         Long chatId = update.getMessage().getChatId();

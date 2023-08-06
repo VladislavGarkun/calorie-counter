@@ -25,13 +25,10 @@ public class ShowMealsBotCommand implements BotCommand {
     private static final String FORMAT = "|%1$-10s|%2$-30s|%3$-20s|%4$-10s|%5$-10s|%6$-10s|%7$-10s|%8$-20s|\n";
     private static final String[] HEADERS = {"Number", "Name", "Weight", "Proteins", "Carbs", "Fats", "Calories", "Time"};
 
-    private final EatenMealMapper eatenMealMapper;
-
-    private final SessionService sessionService;
-
-    private final ProductService productService;
-
     private final MealService mealService;
+    private final SessionService sessionService;
+    private final ProductService productService;
+    private final EatenMealMapper eatenMealMapper;
 
     @Override
     public Command getCommand() {

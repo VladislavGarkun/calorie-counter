@@ -24,12 +24,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthenticateBotCommand implements BotCommand {
 
-    private final SessionService sessionService;
-    private final ConfirmationService confirmationService;
-    private final SendMailService sendMailService;
-
     @Value("${allowed.mail.domains}")
     private Set<String> domains;
+
+    private final SessionService sessionService;
+    private final SendMailService sendMailService;
+    private final ConfirmationService confirmationService;
 
     @Override
     public Command getCommand() {
@@ -56,7 +56,7 @@ public class AuthenticateBotCommand implements BotCommand {
             }
             case AUTHENTICATION_ENTER_NAME: {
                 String name = update.getMessage().getText();
-                if(name != null && name.length() > 0) {
+                if(name != null && !name.isEmpty()) {
                     sessionService.setBotState(chatId, State.AUTHENTICATION_ENTER_EMAIL);
                     sessionService.setName(chatId, name);
                     yield "Please enter your email: ";

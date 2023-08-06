@@ -17,9 +17,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ConfirmationController {
 
-    private final ConfirmationService confirmationService;
-    private final SendMailService sendMailService;
     private final SessionService sessionService;
+    private final SendMailService sendMailService;
+    private final ConfirmationService confirmationService;
 
     @GetMapping(value = "/confirmation/{id}")
     public ResponseEntity confirmUser(@PathVariable String id) throws MessagingException {

@@ -28,17 +28,13 @@ import java.util.stream.Stream;
 public class BotConfiguration {
 
     private String name;
-
     private String accessToken;
 
-    private final ListableBeanFactory beanFactory;
-
     private Map<Command, BotCommand> botCommands = new EnumMap<>(Command.class);
-
+    private Map<State, BotCommand> botCommandsByState = new EnumMap<>(State.class);
     private Map<String, BotCommand> botCommandsByString = new HashMap<>();
 
-    private Map<State, BotCommand> botCommandsByState = new EnumMap<>(State.class);
-
+    private final ListableBeanFactory beanFactory;
     private final MessageConfiguration messageConfiguration;
 
     @PostConstruct
@@ -52,7 +48,7 @@ public class BotConfiguration {
                 .values()
                 .stream()
                 .flatMap(botCommand -> botCommand.getStates().stream().map(state -> Map.entry(state, botCommand)))
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         botCommandsByString = beanFactory.getBeansOfType(BotCommand.class).values().stream().collect(Collectors.toMap(botCommand -> "/" + botCommand.getCommand().name().toLowerCase(), Function.identity()));
 

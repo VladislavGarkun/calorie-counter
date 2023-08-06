@@ -22,9 +22,9 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceUnitTest {
 
-    private static final String PRODUCT = "product";
-    private static final String NAME = "name";
     private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String PRODUCT = "product";
 
     @InjectMocks
     private ProductService productService;
