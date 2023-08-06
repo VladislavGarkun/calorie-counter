@@ -4,6 +4,7 @@ import com.ibagroup.common.domain.dto.MealRegistrationDto;
 import com.ibagroup.common.domain.mapper.MealRegistrationMapper;
 import com.ibagroup.common.dao.mongo.collection.Meal;
 import com.ibagroup.common.dao.mongo.repository.MealRepository;
+import com.ibagroup.common.service.impl.MealServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class MealServiceUnitTest {
 
     @InjectMocks
-    private MealService mealService;
+    private MealServiceImpl mealService;
 
     @Mock
     private MealRepository mealRepository;

@@ -1,24 +1,13 @@
 package com.ibagroup.common.service;
 
 import com.ibagroup.common.dao.mongo.collection.Confirmation;
-import com.ibagroup.common.dao.mongo.repository.ConfirmationRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
-@RequiredArgsConstructor
-public class ConfirmationService {
+public interface ConfirmationService {
 
-    private final ConfirmationRepository confirmationRepository;
+    void createConfirmation(Confirmation confirmation);
 
-    public void createConfirmation(Confirmation confirmation){
-        confirmationRepository.insert(confirmation);
-    }
-
-    public Optional<Confirmation> getConfirmationById(String id){
-        return confirmationRepository.findById(id);
-    }
+    Optional<Confirmation> getConfirmationById(String id);
 
 }

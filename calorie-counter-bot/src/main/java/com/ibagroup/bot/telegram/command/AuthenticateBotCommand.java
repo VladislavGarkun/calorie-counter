@@ -1,9 +1,9 @@
 package com.ibagroup.bot.telegram.command;
 
 import com.ibagroup.bot.command.Command;
+import com.ibagroup.common.dao.enums.State;
 import com.ibagroup.common.dao.mongo.collection.Confirmation;
 import com.ibagroup.common.dao.mongo.collection.Session;
-import com.ibagroup.common.dao.enums.State;
 import com.ibagroup.common.service.ConfirmationService;
 import com.ibagroup.common.service.SendMailService;
 import com.ibagroup.common.service.SessionService;

@@ -1,11 +1,12 @@
 package com.ibagroup.common.service;
 
+import com.ibagroup.common.dao.mongo.collection.Product;
+import com.ibagroup.common.dao.mongo.repository.ProductRepository;
 import com.ibagroup.common.domain.dto.ProductDto;
 import com.ibagroup.common.domain.dto.ProductRegistrationDto;
 import com.ibagroup.common.domain.mapper.ProductMapper;
 import com.ibagroup.common.domain.mapper.ProductRegistrationMapper;
-import com.ibagroup.common.dao.mongo.collection.Product;
-import com.ibagroup.common.dao.mongo.repository.ProductRepository;
+import com.ibagroup.common.service.impl.ProductServiceImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,7 +28,7 @@ public class ProductServiceUnitTest {
     private static final String PRODUCT = "product";
 
     @InjectMocks
-    private ProductService productService;
+    private ProductServiceImpl productService;
 
     @Mock
     private ProductMapper productMapper;

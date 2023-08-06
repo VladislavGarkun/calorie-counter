@@ -1,8 +1,8 @@
 package com.ibagroup.bot.telegram.command;
 
 import com.ibagroup.bot.command.Command;
-import com.ibagroup.common.domain.dto.ProductRegistrationDto;
 import com.ibagroup.common.dao.enums.State;
+import com.ibagroup.common.domain.dto.ProductRegistrationDto;
 import com.ibagroup.common.service.ProductService;
 import com.ibagroup.common.service.SessionService;
 import lombok.RequiredArgsConstructor;
