@@ -19,19 +19,19 @@ public class ProductDto {
     @NotEmpty(message = "Product name can't be empty")
     private String name;
 
-    @NotNull(message = "Proteins cannot be null")
+    @NotNull(message = "Proteins can't be null")
     @PositiveOrZero(message = "Proteins can't be less than 0")
     private Float proteins;
 
-    @NotNull(message = "Carbs cannot be null")
+    @NotNull(message = "Carbs can't be null")
     @PositiveOrZero(message = "Carbs can't be less than 0")
     private Float carbs;
 
-    @NotNull(message = "Fats cannot be null")
+    @NotNull(message = "Fats can't be null")
     @PositiveOrZero(message = "Fats can't be less than 0")
     private Float fats;
 
-    @NotNull(message = "Calories cannot be null")
+    @NotNull(message = "Calories can't be null")
     @Min(value = 0, message = "Calories can't be less than 0")
     private Float calories;
 

@@ -1,9 +1,9 @@
 package com.ibagroup.bot.telegram.command;
 
 import com.ibagroup.bot.command.Command;
+import com.ibagroup.common.dao.enums.State;
+import com.ibagroup.common.dao.mongo.collection.Session;
 import com.ibagroup.common.domain.dto.MealRegistrationDto;
-import com.ibagroup.common.mongo.collection.Session;
-import com.ibagroup.common.mongo.collection.State;
 import com.ibagroup.common.service.MealService;
 import com.ibagroup.common.service.ProductService;
 import com.ibagroup.common.service.SessionService;
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class AddMealBotCommand implements BotCommand {
 
-    private final static String NUMBER_PATTERN = "[0-9.]*";
+    private final static String NUMBER_PATTERN = "[0-9]+\\.?[0-9]*";
 
     private final MealService mealService;
     private final SessionService sessionService;

@@ -1,5 +1,6 @@
-package com.ibagroup.common.mongo.collection;
+package com.ibagroup.common.dao.mongo.collection;
 
+import com.ibagroup.common.dao.enums.State;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,28 +11,32 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.lang.NonNull;
 
-import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Document(collection = "confirmation")
+@Document(collection = "sessions")
 @RequiredArgsConstructor
-public class Confirmation {
+public class Session {
 
     @Id
     @Setter(AccessLevel.NONE)
-    private final String id;
-
     @NonNull
-    private final Long chatId;
+    private Long id;
+
+    @Field(targetType = FieldType.STRING)
+    private State state = State.DEFAULT;
 
     @Field(targetType = FieldType.DATE_TIME)
-    @NonNull
-    private final LocalDateTime creationDateTime;
+    private LocalDateTime confirmedTime;
 
-    @Email(message = "Email must be correct")
-    @NonNull
-    private final String email;
+    @Field(targetType = FieldType.BOOLEAN)
+    private boolean isConfirmed;
+
+    @Field(targetType = FieldType.STRING)
+    private String email;
+
+    @Field(targetType = FieldType.STRING)
+    private String name;
 
 }

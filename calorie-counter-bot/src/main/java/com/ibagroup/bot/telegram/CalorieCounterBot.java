@@ -16,7 +16,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class CalorieCounterBot extends TelegramLongPollingBot {
 
     private final BotConfiguration botConfiguration;
-
     private final CalorieCounterBotFacade calorieCounterBotFacade;
 
     @Override

@@ -1,4 +1,4 @@
-package com.ibagroup.common.mongo.collection;
+package com.ibagroup.common.dao.enums;
 
 public enum State {
 

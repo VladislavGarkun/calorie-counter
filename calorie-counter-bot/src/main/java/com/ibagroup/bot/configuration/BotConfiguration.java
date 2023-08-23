@@ -2,14 +2,12 @@ package com.ibagroup.bot.configuration;
 
 import com.ibagroup.bot.command.Command;
 import com.ibagroup.bot.telegram.command.BotCommand;
-import com.ibagroup.common.mongo.collection.State;
+import com.ibagroup.common.dao.enums.State;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -28,17 +26,13 @@ import java.util.stream.Stream;
 public class BotConfiguration {
 
     private String name;
-
     private String accessToken;
 
-    private final ListableBeanFactory beanFactory;
-
     private Map<Command, BotCommand> botCommands = new EnumMap<>(Command.class);
-
+    private Map<State, BotCommand> botCommandsByState = new EnumMap<>(State.class);
     private Map<String, BotCommand> botCommandsByString = new HashMap<>();
 
-    private Map<State, BotCommand> botCommandsByState = new EnumMap<>(State.class);
-
+    private final ListableBeanFactory beanFactory;
     private final MessageConfiguration messageConfiguration;
 
     @PostConstruct
@@ -52,7 +46,7 @@ public class BotConfiguration {
                 .values()
                 .stream()
                 .flatMap(botCommand -> botCommand.getStates().stream().map(state -> Map.entry(state, botCommand)))
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         botCommandsByString = beanFactory.getBeansOfType(BotCommand.class).values().stream().collect(Collectors.toMap(botCommand -> "/" + botCommand.getCommand().name().toLowerCase(), Function.identity()));
 

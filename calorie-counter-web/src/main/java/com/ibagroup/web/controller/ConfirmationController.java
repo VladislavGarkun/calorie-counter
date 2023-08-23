@@ -1,6 +1,6 @@
 package com.ibagroup.web.controller;
 
-import com.ibagroup.common.mongo.collection.Confirmation;
+import com.ibagroup.common.dao.mongo.collection.Confirmation;
 import com.ibagroup.common.service.ConfirmationService;
 import com.ibagroup.common.service.SendMailService;
 import com.ibagroup.common.service.SessionService;
@@ -17,9 +17,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ConfirmationController {
 
-    private final ConfirmationService confirmationService;
-    private final SendMailService sendMailService;
     private final SessionService sessionService;
+    private final SendMailService sendMailService;
+    private final ConfirmationService confirmationService;
 
     @GetMapping(value = "/confirmation/{id}")
     public ResponseEntity confirmUser(@PathVariable String id) throws MessagingException {

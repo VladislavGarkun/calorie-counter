@@ -1,7 +1,7 @@
 package com.ibagroup.common.domain.mapper;
 
 import com.ibagroup.common.domain.dto.ProductDto;
-import com.ibagroup.common.mongo.collection.Product;
+import com.ibagroup.common.dao.mongo.collection.Product;
 import org.mapstruct.Mapper;
 
 import java.util.List;

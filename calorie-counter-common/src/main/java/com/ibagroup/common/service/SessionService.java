@@ -1,62 +1,26 @@
 package com.ibagroup.common.service;
 
-import com.ibagroup.common.mongo.collection.Session;
-import com.ibagroup.common.mongo.collection.State;
-import com.ibagroup.common.mongo.repository.SessionRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.ibagroup.common.dao.enums.State;
+import com.ibagroup.common.dao.mongo.collection.Session;
 
-import java.util.Optional;
+public interface SessionService {
 
-@Service
-@RequiredArgsConstructor
-public class SessionService {
+    boolean isChatNew(Long id);
 
-    private final SessionRepository sessionRepository;
+    void initChat(Long id);
 
-    public boolean isChatNew(Long id){
-        return sessionRepository.findById(id).isEmpty();
-    }
+    boolean isUserConfirmed(Long id);
 
-    public void initChat(Long id){
-        sessionRepository.insert(new Session(id));
-    }
+    Session getSession(Long id);
 
-    public boolean isUserConfirmed(Long id){
-        return sessionRepository.findById(id).map(Session::isConfirmed).orElseThrow();
-    }
+    State getBotState(Long id);
 
-    public Session getSession(Long id){
-        return sessionRepository.findById(id).orElseThrow();
-    }
+    void setBotState(Long id, State state);
 
-    public State getBotState(Long id){
-        Optional<Session> sessionOptional = sessionRepository.findById(id);
-        return sessionOptional.map(Session::getState).orElseThrow();
-    }
+    void setName(Long id, String name);
 
-    public void setBotState(Long id, State state){
-        Session session = sessionRepository.findById(id).orElseThrow();
-        session.setState(state);
-        sessionRepository.save(session);
-    }
+    void setEmail(Long id, String email);
 
-    public void setName(Long id, String name) {
-        Session session = sessionRepository.findById(id).orElseThrow();
-        session.setName(name);
-        sessionRepository.save(session);
-    }
-
-    public void setEmail(Long id, String email) {
-        Session session = sessionRepository.findById(id).orElseThrow();
-        session.setEmail(email);
-        sessionRepository.save(session);
-    }
-
-    public void confirmUser(Long id){
-        Session session = sessionRepository.findById(id).orElseThrow();
-        session.setConfirmed(true);
-        sessionRepository.save(session);
-    }
+    void confirmUser(Long id);
 
 }

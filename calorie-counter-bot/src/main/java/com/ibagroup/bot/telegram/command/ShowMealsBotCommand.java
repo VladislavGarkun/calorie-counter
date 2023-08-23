@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
@@ -25,13 +27,10 @@ public class ShowMealsBotCommand implements BotCommand {
     private static final String FORMAT = "|%1$-10s|%2$-30s|%3$-20s|%4$-10s|%5$-10s|%6$-10s|%7$-10s|%8$-20s|\n";
     private static final String[] HEADERS = {"Number", "Name", "Weight", "Proteins", "Carbs", "Fats", "Calories", "Time"};
 
-    private final EatenMealMapper eatenMealMapper;
-
-    private final SessionService sessionService;
-
-    private final ProductService productService;
-
     private final MealService mealService;
+    private final SessionService sessionService;
+    private final ProductService productService;
+    private final EatenMealMapper eatenMealMapper;
 
     @Override
     public Command getCommand() {
@@ -61,8 +60,22 @@ public class ShowMealsBotCommand implements BotCommand {
                     eatenMealDtoList.get(i).getCarbs() + GRAM,
                     eatenMealDtoList.get(i).getFats() + GRAM,
                     eatenMealDtoList.get(i).getCalories() + KCAL,
-                    eatenMealDtoList.get(i).getMealDateTime()));
+                    mapToString(eatenMealDtoList.get(i).getMealDateTime().toLocalTime())));
         }
+        float totalWeight = summarizeTotal(eatenMealDtoList, EatenMealDto::getWeight);
+        float totalProteins = summarizeTotal(eatenMealDtoList, EatenMealDto::getProteins);
+        float totalCarbs = summarizeTotal(eatenMealDtoList, EatenMealDto::getCarbs);
+        float totalFats = summarizeTotal(eatenMealDtoList, EatenMealDto::getFats);
+        float totalCalories = summarizeTotal(eatenMealDtoList, EatenMealDto::getCalories);
+
+        eatenMealsInfo.append(String.format(FORMAT, 0 + RIGHT_BRACKET,
+                "Summary",
+                totalWeight + GRAM,
+                totalProteins + GRAM,
+                totalCarbs + GRAM,
+                totalFats + GRAM,
+                totalCalories + KCAL,
+                mapToString(LocalTime.now())));
 
         return eatenMealsInfo.toString();
     }
@@ -70,5 +83,13 @@ public class ShowMealsBotCommand implements BotCommand {
     @Override
     public String getDescription() {
         return "Shows meals which you have eaten today";
+    }
+
+    private float summarizeTotal(List<EatenMealDto> eatenMealDtoList, Function<EatenMealDto, Float> function){
+        return (float) eatenMealDtoList.stream().map(function).mapToDouble(x -> (double)x).sum();
+    }
+
+    private String mapToString(LocalTime localTime){
+        return localTime.getHour() + ":" + localTime.getMinute() + ":" + localTime.getSecond();
     }
 }

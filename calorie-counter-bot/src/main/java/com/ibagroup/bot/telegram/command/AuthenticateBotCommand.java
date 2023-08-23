@@ -1,9 +1,9 @@
 package com.ibagroup.bot.telegram.command;
 
 import com.ibagroup.bot.command.Command;
-import com.ibagroup.common.mongo.collection.Confirmation;
-import com.ibagroup.common.mongo.collection.Session;
-import com.ibagroup.common.mongo.collection.State;
+import com.ibagroup.common.dao.enums.State;
+import com.ibagroup.common.dao.mongo.collection.Confirmation;
+import com.ibagroup.common.dao.mongo.collection.Session;
 import com.ibagroup.common.service.ConfirmationService;
 import com.ibagroup.common.service.SendMailService;
 import com.ibagroup.common.service.SessionService;
@@ -24,12 +24,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthenticateBotCommand implements BotCommand {
 
-    private final SessionService sessionService;
-    private final ConfirmationService confirmationService;
-    private final SendMailService sendMailService;
-
     @Value("${allowed.mail.domains}")
     private Set<String> domains;
+
+    private final SessionService sessionService;
+    private final SendMailService sendMailService;
+    private final ConfirmationService confirmationService;
 
     @Override
     public Command getCommand() {
@@ -56,7 +56,7 @@ public class AuthenticateBotCommand implements BotCommand {
             }
             case AUTHENTICATION_ENTER_NAME: {
                 String name = update.getMessage().getText();
-                if(name != null && name.length() > 0) {
+                if(name != null && !name.isEmpty()) {
                     sessionService.setBotState(chatId, State.AUTHENTICATION_ENTER_EMAIL);
                     sessionService.setName(chatId, name);
                     yield "Please enter your email: ";
