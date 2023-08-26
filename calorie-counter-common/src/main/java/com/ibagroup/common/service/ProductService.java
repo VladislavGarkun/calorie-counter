@@ -14,6 +14,8 @@ public interface ProductService {
 
     List<ProductDto> getProducts();
 
+    List<String> getProductNames();
+
     String getProductIdByName(String name);
 
     Map<String, ProductDto> getProductsByIds(List<String> productIds);

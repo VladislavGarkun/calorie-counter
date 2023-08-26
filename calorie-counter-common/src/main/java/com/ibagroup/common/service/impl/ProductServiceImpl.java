@@ -42,6 +42,14 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toDto(productRepository.findAll());
     }
 
+    @Override
+    public List<String> getProductNames() {
+        return productMapper.toDto(productRepository.findAll())
+                .stream()
+                .map(ProductDto::getName)
+                .collect(Collectors.toList());
+    }
+
     public String getProductIdByName(String name){
         return productRepository.findProductByName(name).map(Product::getId).orElse(null);
     }

@@ -14,6 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class AddMealBotCommand implements BotCommand {
 
     @Override
     public List<State> getStates(){
-        return List.of(State.ENTER_PRODUCT_NAME, State.ENTER_PRODUCT_WEIGHT);
+        return List.of(State.SELECT_PRODUCT_NAME, State.ENTER_PRODUCT_WEIGHT);
     }
 
     @Override
@@ -47,11 +48,14 @@ public class AddMealBotCommand implements BotCommand {
 
         return switch (session.getState()){
             case DEFAULT:{
-                sessionService.setBotState(chatId, State.ENTER_PRODUCT_NAME);
-                yield "Please enter product name: ";
+                sessionService.setBotState(chatId, State.SELECT_PRODUCT_NAME);
+                List<String> productNames = productService.getProductNames();
+                yield productNames.stream()
+                        .map(productName -> "/" + productName.replace(" ", "_"))
+                        .collect(Collectors.joining("\n"));
             }
-            case ENTER_PRODUCT_NAME: {
-                String name = update.getMessage().getText();
+            case SELECT_PRODUCT_NAME: {
+                String name = update.getMessage().getText().substring(1).replace("_", " ");
                 String productId = productService.getProductIdByName(name);
                 if (productId != null){
                     mealRegistrationDto.setProductId(productId);
@@ -63,7 +67,7 @@ public class AddMealBotCommand implements BotCommand {
             }
             case ENTER_PRODUCT_WEIGHT: {
                 String weight = update.getMessage().getText();
-                if (Pattern.matches(NUMBER_PATTERN, weight) && Float.valueOf(weight) > 0) {
+                if (Pattern.matches(NUMBER_PATTERN, weight) && Float.parseFloat(weight) > 0) {
                     mealRegistrationDto.setWeight(Float.valueOf(weight));
                     mealRegistrationDto.setMealDateTime(LocalDateTime.now());
                     mealRegistrationDto.setSessionId(chatId);
