@@ -1,11 +1,11 @@
 package com.ibagroup.common.service.impl;
 
+import com.ibagroup.common.dao.mongo.collection.Meal;
+import com.ibagroup.common.dao.mongo.repository.MealRepository;
 import com.ibagroup.common.domain.dto.MealDto;
 import com.ibagroup.common.domain.dto.MealRegistrationDto;
 import com.ibagroup.common.domain.mapper.MealMapper;
 import com.ibagroup.common.domain.mapper.MealRegistrationMapper;
-import com.ibagroup.common.dao.mongo.collection.Meal;
-import com.ibagroup.common.dao.mongo.repository.MealRepository;
 import com.ibagroup.common.service.MealService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,5 +34,25 @@ public class MealServiceImpl implements MealService {
                 .filter(meal -> meal.getMealDateTime().toLocalDate().isEqual(LocalDate.now()))
                 .map(mealMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isMealNew(String productId){
+        return mealRepository.findAllByProductId(productId)
+                .stream()
+                .noneMatch(meal -> meal.getMealDateTime().toLocalDate().isEqual(LocalDate.now()));
+    }
+
+    private Meal getMealByProductId(String productId){
+        return mealRepository.findAllByProductId(productId)
+                .stream()
+                .filter(meal -> meal.getMealDateTime().toLocalDate().isEqual(LocalDate.now()))
+                .collect(Collectors.toList())
+                .get(0);
+    }
+
+    public void updateMeal(String productId, Float weight){
+        Meal meal = getMealByProductId(productId);
+        meal.setWeight(meal.getWeight() + weight);
+        mealRepository.save(meal);
     }
 }
