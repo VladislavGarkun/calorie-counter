@@ -9,4 +9,6 @@ public interface MealRepository extends MongoRepository<Meal, String> {
 
     List<Meal> findAllBySessionId(Long chatId);
 
+    List<Meal> findAllByProductId(String productId);
+
 }

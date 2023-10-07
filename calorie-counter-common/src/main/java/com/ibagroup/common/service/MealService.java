@@ -11,4 +11,8 @@ public interface MealService {
 
     List<MealDto> getProductIdsByChatId(Long chatId);
 
+    boolean isMealNew(String productId);
+
+    void updateMeal(String productId, Float weight);
+
 }
