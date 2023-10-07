@@ -20,4 +20,6 @@ public interface ProductService {
 
     Map<String, ProductDto> getProductsByIds(List<String> productIds);
 
+    boolean isProductRegistered(String name);
+
 }

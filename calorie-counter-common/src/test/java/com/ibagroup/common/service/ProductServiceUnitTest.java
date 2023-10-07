@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -137,8 +139,8 @@ public class ProductServiceUnitTest {
         String actual = productService.getProductIdByName(NAME);
 
         // then
-        verify(productRepository).findProductByName(NAME);
         assertThat(actual).isNull();
+        verify(productRepository).findProductByName(NAME);
     }
 
     @Test
@@ -159,6 +161,31 @@ public class ProductServiceUnitTest {
         verify(productRepository).findProductsByIdIn(productIds);
         verify(productMapper).toDto(products.get(0));
         verify(productMapper).toDto(products.get(1));
+    }
+
+    @Test
+    public void shouldReturnFalse_whenIsProductRegistered_givenProductName() {
+        // given
+
+        // when
+        boolean actual = productService.isProductRegistered(NAME);
+
+        // then
+        assertFalse(actual);
+        verify(productRepository).existsProductsByName(NAME);
+    }
+
+    @Test
+    public void shouldReturnTrue_whenIsProductRegistered_givenProductName() {
+        // given
+        when(productRepository.existsProductsByName(any())).thenReturn(true);
+
+        // when
+        boolean actual = productService.isProductRegistered(NAME);
+
+        // then
+        assertTrue(actual);
+        verify(productRepository).existsProductsByName(NAME);
     }
 
     private Product prepareProduct(){
