@@ -52,6 +52,9 @@ public class RegisterProductBotCommand implements BotCommand{
             }
             case ADDING_PRODUCT_ENTER_NAME: {
                 String name = update.getMessage().getText();
+                if(productService.isProductRegistered(name)){
+                    yield "Product with this name has been already registered!";
+                }
                 if(Pattern.matches(TEXT_PATTERN, name)){
                     productRegistrationDto.setName(name);
                     sessionService.setBotState(chatId, State.ADDING_PRODUCT_ENTER_PROTEINS);

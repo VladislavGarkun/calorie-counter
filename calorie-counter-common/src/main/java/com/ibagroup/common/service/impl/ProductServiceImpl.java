@@ -47,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toDto(productRepository.findAll())
                 .stream()
                 .map(ProductDto::getName)
+                .sorted()
                 .collect(Collectors.toList());
     }
 
@@ -60,4 +61,10 @@ public class ProductServiceImpl implements ProductService {
                 .map(productMapper::toDto)
                 .collect(Collectors.toMap(ProductDto::getId, Function.identity()));
     }
+
+    @Override
+    public boolean isProductRegistered(String name) {
+        return productRepository.existsProductsByName(name);
+    }
+
 }
