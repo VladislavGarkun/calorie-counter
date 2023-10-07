@@ -13,7 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -139,6 +141,26 @@ public class ProductServiceUnitTest {
         assertThat(actual).isNull();
     }
 
+    @Test
+    public void shouldReturnProductDtoMap_whenGetProductsByIds_givenProductIdList(){
+        // given
+        List<String> productIds = List.of("id1", "id2");
+        List<Product> products = prepapeProductList();
+        Map<String, ProductDto> expected = prepareProductDtoMap();
+
+        when(productRepository.findProductsByIdIn(any())).thenReturn(products);
+        when(productMapper.toDto(any(Product.class))).thenReturn(prepareFilledProductDto("id1"), prepareFilledProductDto("id2"));
+
+        // when
+        Map<String, ProductDto> actual = productService.getProductsByIds(productIds);
+
+        // then
+        assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
+        verify(productRepository).findProductsByIdIn(productIds);
+        verify(productMapper).toDto(products.get(0));
+        verify(productMapper).toDto(products.get(1));
+    }
+
     private Product prepareProduct(){
         Product product = new Product();
         product.setName(PRODUCT);
@@ -162,6 +184,13 @@ public class ProductServiceUnitTest {
 
     private ProductDto prepareFilledProductDto(String id){
         return new ProductDto(id, NAME, 2f, 3f, 4f, 56f);
+    }
+
+    private Map<String, ProductDto> prepareProductDtoMap(){
+        Map<String, ProductDto> productDtoMap = new HashMap<>();
+        productDtoMap.put("id1", prepareFilledProductDto("id1"));
+        productDtoMap.put("id2", prepareFilledProductDto("id2"));
+        return productDtoMap;
     }
 
 }

@@ -44,7 +44,7 @@ public class ShowMealsBotCommand implements BotCommand {
             return "You need to authenticate to use this command";
         }
 
-        List<MealDto> mealDtoList = mealService.getProductIdsByChatId(chatId);
+        List<MealDto> mealDtoList = mealService.getMealsByChatId(chatId);
         List<String> productIds = mealDtoList.stream().map(MealDto::getProductId).toList();
         Map<String, ProductDto> productDtoMap = productService.getProductsByIds(productIds);
 
