@@ -9,6 +9,6 @@ public interface MealService {
 
     void createMeal(MealRegistrationDto mealRegistrationDto);
 
-    List<MealDto> getProductIdsByChatId(Long chatId);
+    List<MealDto> getMealsByChatId(Long chatId);
 
 }

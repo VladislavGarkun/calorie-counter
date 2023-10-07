@@ -27,7 +27,7 @@ public class MealServiceImpl implements MealService {
         mealRepository.insert(meal);
     }
 
-    public List<MealDto> getProductIdsByChatId(Long chatId) {
+    public List<MealDto> getMealsByChatId(Long chatId) {
         List<Meal> meals = mealRepository.findAllBySessionId(chatId);
         return meals
                 .stream()
