@@ -25,3 +25,15 @@ services:
       - 8081:8081
     depends_on:
       - mongodb
+  postgresql:
+    image: postgres:latest
+    container_name: calorie-counter-postgresql
+    restart: always
+    env_file:
+      - calorie-counter-common/src/main/resources/.env
+    environment:
+      - POSTGRES_DB=authorization_DB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
