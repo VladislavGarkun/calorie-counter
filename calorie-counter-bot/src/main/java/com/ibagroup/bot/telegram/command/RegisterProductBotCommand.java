@@ -1,6 +1,8 @@
 package com.ibagroup.bot.telegram.command;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ibagroup.bot.command.Command;
+import com.ibagroup.bot.kafka.producer.ProductEventProducer;
 import com.ibagroup.common.dao.enums.State;
 import com.ibagroup.common.domain.dto.ProductRegistrationDto;
 import com.ibagroup.common.service.ProductService;
@@ -23,6 +25,7 @@ public class RegisterProductBotCommand implements BotCommand{
 
     private final SessionService sessionService;
     private final ProductService productService;
+    private final ProductEventProducer productEventProducer;
 
     @Override
     public Command getCommand() {
@@ -38,7 +41,7 @@ public class RegisterProductBotCommand implements BotCommand{
     }
 
     @Override
-    public String execute(Update update) {
+    public String execute(Update update) throws JsonProcessingException {
         Long chatId = update.getMessage().getChatId();
         if(!sessionService.isUserConfirmed(chatId)) {
             return "You need to authenticate to use this command";
@@ -87,6 +90,7 @@ public class RegisterProductBotCommand implements BotCommand{
                 String fats = update.getMessage().getText();
                 if(Pattern.matches(NUMBER_PATTERN, fats) && Float.parseFloat(fats) >= 0) {
                     productRegistrationDto.setFats(Float.valueOf(fats));
+                    productEventProducer.sendProduct(productRegistrationDto);
                     productService.createProduct(productRegistrationDto);
                     sessionService.setBotState(chatId, State.DEFAULT);
                     yield "Product successfully added";

@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: local
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  kafka:
+    topic: "products"
+    producer:
+      bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+bot:
+  name: ${BOT_NAME}
+  access-token: ${BOT_ACCESS_TOKEN}
+allowed:
+  mail:
+    domains:gmail.com,mail.ru:

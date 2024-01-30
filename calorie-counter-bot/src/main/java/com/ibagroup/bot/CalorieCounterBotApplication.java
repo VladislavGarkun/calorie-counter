@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @ComponentScan(value = {"com.ibagroup.bot", "com.ibagroup.common"})
 @PropertySources({
-        @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:application.yaml"),
         @PropertySource("classpath:application-common.properties")
 })
 @SpringBootApplication
