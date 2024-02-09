@@ -3,8 +3,8 @@ package com.ibagroup.bot.telegram.command;
 import com.ibagroup.bot.command.Command;
 import com.ibagroup.common.dao.enums.State;
 import com.ibagroup.common.dao.mongo.collection.Session;
-import com.ibagroup.common.domain.dto.MealRegistrationDto;
-import com.ibagroup.common.service.MealService;
+import com.ibagroup.common.domain.dto.CourseRegistrationDto;
+import com.ibagroup.common.service.CourseService;
 import com.ibagroup.common.service.ProductService;
 import com.ibagroup.common.service.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -18,25 +18,25 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class AddMealBotCommand implements BotCommand {
+public class AddCourseBotCommand implements BotCommand {
 
     private final static String NUMBER_PATTERN = "[0-9]+\\.?[0-9]*";
 
-    private final MealService mealService;
+    private final CourseService courseService;
     private final SessionService sessionService;
     private final ProductService productService;
 
     private String productId;
-    private MealRegistrationDto mealRegistrationDto = new MealRegistrationDto();
+    private CourseRegistrationDto courseRegistrationDto = new CourseRegistrationDto();
 
     @Override
     public Command getCommand() {
-        return Command.ADD_MEAL;
+        return Command.ADD_COURSE;
     }
 
     @Override
     public List<State> getStates(){
-        return List.of(State.SELECT_PRODUCT_NAME, State.NEW_MEAL_ENTER_PRODUCT_WEIGHT, State.EXISTING_MEAL_ENTER_PRODUCT_WEIGHT);
+        return List.of(State.SELECT_PRODUCT_NAME, State.NEW_COURSE_ENTER_PRODUCT_WEIGHT, State.EXISTING_COURSE_ENTER_PRODUCT_WEIGHT);
     }
 
     @Override
@@ -58,37 +58,37 @@ public class AddMealBotCommand implements BotCommand {
             case SELECT_PRODUCT_NAME: {
                 String name = update.getMessage().getText().substring(1).replace("_", " ");
                 productId = productService.getProductIdByName(name);
-                boolean isMealNew = mealService.isMealNew(productId);
-                if (productId != null && isMealNew) {
-                    mealRegistrationDto.setProductId(productId);
-                    sessionService.setBotState(chatId, State.NEW_MEAL_ENTER_PRODUCT_WEIGHT);
-                    yield "Please enter meal weight: ";
-                } else if (productId != null && !isMealNew){
-                    sessionService.setBotState(chatId, State.EXISTING_MEAL_ENTER_PRODUCT_WEIGHT);
-                    yield "Please enter meal weight: ";
+                boolean isCourseNew = courseService.isCourseNew(productId);
+                if (productId != null && isCourseNew) {
+                    courseRegistrationDto.setProductId(productId);
+                    sessionService.setBotState(chatId, State.NEW_COURSE_ENTER_PRODUCT_WEIGHT);
+                    yield "Please enter course weight: ";
+                } else if (productId != null && !isCourseNew){
+                    sessionService.setBotState(chatId, State.EXISTING_COURSE_ENTER_PRODUCT_WEIGHT);
+                    yield "Please enter course weight: ";
                 } else {
                     yield "Product with this name doesn't exist. Please try again: ";
                 }
             }
-            case NEW_MEAL_ENTER_PRODUCT_WEIGHT: {
+            case NEW_COURSE_ENTER_PRODUCT_WEIGHT: {
                 String weight = update.getMessage().getText();
                 if (Pattern.matches(NUMBER_PATTERN, weight) && Float.parseFloat(weight) > 0) {
-                    mealRegistrationDto.setWeight(Float.valueOf(weight));
-                    mealRegistrationDto.setMealDateTime(LocalDateTime.now());
-                    mealRegistrationDto.setSessionId(chatId);
-                    mealService.createMeal(mealRegistrationDto);
+                    courseRegistrationDto.setWeight(Float.valueOf(weight));
+                    courseRegistrationDto.setCourseDateTime(LocalDateTime.now());
+                    courseRegistrationDto.setSessionId(chatId);
+                    courseService.createCourse(courseRegistrationDto);
                     sessionService.setBotState(chatId, State.DEFAULT);
-                    yield "Meal was successfully added";
+                    yield "Course was successfully added";
                 } else {
                    yield "Please enter positive weight value: ";
                 }
             }
-            case EXISTING_MEAL_ENTER_PRODUCT_WEIGHT: {
+            case EXISTING_COURSE_ENTER_PRODUCT_WEIGHT: {
                 String weight = update.getMessage().getText();
                 if (Pattern.matches(NUMBER_PATTERN, weight) && Float.parseFloat(weight) > 0) {
-                    mealService.updateMeal(productId, Float.valueOf(weight));
+                    courseService.updateCourse(productId, Float.valueOf(weight));
                     sessionService.setBotState(chatId, State.DEFAULT);
-                    yield "Meal was successfully updated";
+                    yield "Course was successfully updated";
                 } else {
                     yield "Please enter positive weight value: ";
                 }

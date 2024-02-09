@@ -1,5 +1,6 @@
 package com.ibagroup.bot.telegram;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ibagroup.bot.configuration.BotConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,12 @@ public class CalorieCounterBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        String message = calorieCounterBotFacade.onUpdateReceived(update);
+        String message = null;
+        try {
+            message = calorieCounterBotFacade.onUpdateReceived(update);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         sendMessage(update, message);
     }
 

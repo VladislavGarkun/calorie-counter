@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-@Document(value = "meals")
-public class Meal {
+@Document(value = "courses")
+public class Course {
 
     @Id
     @Setter(AccessLevel.NONE)
@@ -26,12 +26,12 @@ public class Meal {
     @NotNull(message = "SessionId can't be null")
     private Long sessionId;
 
-    @NotNull(message = "Meal weight can't be null")
+    @NotNull(message = "Course weight can't be null")
     @Positive(message = "Weight can't be negative or zero")
     private Float weight;
 
-    @NotNull(message = "Meal date time can't be null")
-    @PastOrPresent(message = "Meal date time can't be future")
-    private LocalDateTime mealDateTime;
+    @NotNull(message = "Course date time can't be null")
+    @PastOrPresent(message = "Course date time can't be future")
+    private LocalDateTime courseDateTime;
 
 }
