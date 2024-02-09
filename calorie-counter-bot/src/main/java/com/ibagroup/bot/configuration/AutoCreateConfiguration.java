@@ -13,7 +13,7 @@ public class AutoCreateConfiguration {
     private String topic;
 
     @Bean
-    public NewTopic mealEvents(){
+    public NewTopic productsTopic(){
         return TopicBuilder
                 .name(topic)
                 .partitions(3)

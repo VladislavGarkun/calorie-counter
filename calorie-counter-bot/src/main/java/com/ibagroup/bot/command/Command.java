@@ -15,8 +15,8 @@ public enum Command {
     CANCEL,
     REGISTER_PRODUCT(false),
     SHOW_PRODUCTS(false),
-    ADD_MEAL(false),
-    SHOW_MEALS(false);
+    ADD_COURSE(false),
+    SHOW_COURSES(false);
 
     private boolean isAnonymous = true;
 
